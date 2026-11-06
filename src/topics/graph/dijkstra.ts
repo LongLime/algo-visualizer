@@ -2,6 +2,7 @@ import { Route } from "lucide-react";
 import { parseCode } from "../../core/code";
 import type { Frame } from "../../core/types";
 import type { ReadyTopic } from "../types";
+import { dijkstraTheory } from "./dijkstra-theory";
 
 const edges: Array<[number, number, number]> = [
   [0, 1, 4], [0, 2, 2], [1, 3, 5], [1, 4, 3], [2, 4, 1], [2, 5, 7], [4, 5, 2],
@@ -107,7 +108,7 @@ export const dijkstra: ReadyTopic = {
   id: "dijkstra", group: "graph", title: "最短路径", badge: "O(V^2 + E)", summary: "在带非负权图上逐步选择最小距离并松弛邻接边。", status: "ready", scene: "graph", icon: Route,
   controls: { dataLabel: "起始顶点（0=A，5=F）", defaultValues: [0], limit: 1, randomValues: () => [Math.floor(Math.random() * 6)] },
   legend: [{ label: "当前操作", tone: "active" }, { label: "已确定", tone: "settled" }, { label: "未处理", tone: "idle" }],
-  theory: [{ title: "贪心选择", body: "每轮选择当前距离最小且未确定的顶点，将它标记为已确定。" }, { title: "松弛", body: "若经过当前顶点到达邻接点更短，就更新邻接点的距离。" }, { title: "适用条件", body: "Dijkstra 要求所有边权非负；本示例使用邻接表和 O(V²+E) 的实现。" }],
+  theory: dijkstraTheory,
   trace: ({ values }) => dijkstraTrace(values[0] ?? 0),
   code: (language) => parseCode(templates[language]),
 };

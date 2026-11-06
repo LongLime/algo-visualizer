@@ -3,6 +3,7 @@ import { parseCode } from "../../core/code";
 import type { Frame } from "../../core/types";
 import type { ReadyTopic } from "../types";
 import { templates } from "./graph-traversal-templates";
+import { graphTraversalTheory } from "./graph-traversal-theory";
 
 export const GRAPH_EDGES: Array<[number, number]> = [
   [0, 1], [0, 2], [1, 3], [1, 4], [2, 4], [2, 5], [4, 5],
@@ -71,11 +72,7 @@ export const graphTraversal: ReadyTopic = {
   summary: "在二维图上演示 BFS 与 DFS 的访问顺序、队列和递归回溯。", status: "ready", scene: "graph", icon: Network,
   controls: { dataLabel: "起始顶点（0=A，5=F）", defaultValues: [0], limit: 1, randomValues: () => [Math.floor(Math.random() * 6)], operations: [{ id: "bfs", label: "BFS 广度优先" }, { id: "dfs", label: "DFS 深度优先" }] },
   legend: [{ label: "当前访问", tone: "active" }, { label: "已完成", tone: "settled" }, { label: "未访问", tone: "idle" }],
-  theory: [
-    { title: "BFS", body: "BFS 使用队列逐层扩展，先访问距离起点近的顶点，适合求无权图的最短边数。" },
-    { title: "DFS", body: "DFS 沿一条路径深入，遇到已访问顶点或终点后回溯，递归栈体现当前路径。" },
-    { title: "复杂度", body: "邻接表实现的 BFS 和 DFS 都会访问顶点与边各至多一次，时间复杂度为 O(V+E)。" },
-  ],
+  theory: graphTraversalTheory,
   trace: ({ values, operation }) => graphTrace(values[0] ?? 0, operation === "dfs" ? "dfs" : "bfs"),
   code: (language, operation) => parseCode(templates[language][operation === "dfs" ? "dfs" : "bfs"]),
 };
